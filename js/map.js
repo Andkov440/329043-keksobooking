@@ -49,7 +49,7 @@ var removeChildren = function (elem) {
   }
 };
 
-var createadverts = function () {
+var createAdverts = function () {
   var similarAds = [];
   for (var i = 0; i < ADS_QUANTITY; i++) {
     var pinLocation = {
@@ -80,7 +80,7 @@ var createadverts = function () {
 };
 
 document.querySelector('.map').classList.remove('map--faded');
-var adverts = createadverts();
+var adverts = createAdverts();
 
 var generatePins = function (ads) {
   var mapPins = document.querySelector('.map__pins');
