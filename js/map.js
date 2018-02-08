@@ -96,28 +96,28 @@ var generatePins = function (ads) {
   mapPins.appendChild(fragment);
 };
 
-var renderAdvert = function (ads) {
-  var adsTemplateElement = document.querySelector('template').content;
+var renderAdvert = function (advert) {
+  var adsTemplate = document.querySelector('template').content;
   var mapFiltersContainer = document.querySelector('.map__filters-container');
-  adsTemplateElement.querySelector('h3').textContent = ads.offer.title;
-  adsTemplateElement.querySelector('small').textContent = ads.offer.address;
-  adsTemplateElement.querySelector('.popup__price').textContent = ads.offer.price + ' &#x20bd;/ночь';
-  adsTemplateElement.querySelector('h4').textContent = HOUSE_TYPES[ads.offer.type];
-  adsTemplateElement.querySelector('p:nth-child(7)').textContent = ads.offer.rooms + ' комнаты для ' + ads.offer.guests + ' гостей';
-  adsTemplateElement.querySelector('p:nth-child(8)').textContent = 'Заезд после ' + ads.offer.checkin + ', выезд до ' + ads.offer.checkout;
-  adsTemplateElement.querySelector('p:last-of-type').textContent = ads.offer.description;
-  adsTemplateElement.querySelector('.popup__avatar').src = ads.author.avatar;
+  adsTemplate.querySelector('h3').textContent = advert.offer.title;
+  adsTemplate.querySelector('small').textContent = advert.offer.address;
+  adsTemplate.querySelector('.popup__price').textContent = advert.offer.price + ' &#x20bd;/ночь';
+  adsTemplate.querySelector('h4').textContent = HOUSE_TYPES[advert.offer.type];
+  adsTemplate.querySelector('p:nth-child(7)').textContent = advert.offer.rooms + ' комнаты для ' + advert.offer.guests + ' гостей';
+  adsTemplate.querySelector('p:nth-child(8)').textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
+  adsTemplate.querySelector('p:last-of-type').textContent = advert.offer.description;
+  adsTemplate.querySelector('.popup__avatar').src = advert.author.avatar;
 
-  document.querySelector('.map').insertBefore(adsTemplateElement, mapFiltersContainer);
+  document.querySelector('.map').insertBefore(adsTemplate, mapFiltersContainer);
 
   removeChildren(document.querySelector('.popup__features'));
-  for (var i = 0; i < ads.offer.features.length; i++) {
-    document.querySelector('.popup__features').innerHTML += '<li class="feature feature--' + ads.offer.features[i] + '"></li>';
+  for (var i = 0; i < advert.offer.features.length; i++) {
+    document.querySelector('.popup__features').innerHTML += '<li class="feature feature--' + advert.offer.features[i] + '"></li>';
   }
 
   removeChildren(document.querySelector('.popup__pictures'));
-  for (i = 0; i < ads.offer.photos.length; i++) {
-    document.querySelector('.popup__pictures').innerHTML += '<li><img src="' + ads.offer.photos[i] + '" width="50" height="50"></li>';
+  for (i = 0; i < advert.offer.photos.length; i++) {
+    document.querySelector('.popup__pictures').innerHTML += '<li><img src="' + advert.offer.photos[i] + '" width="50" height="50"></li>';
   }
 };
 
