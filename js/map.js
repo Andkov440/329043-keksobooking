@@ -96,7 +96,7 @@ var generatePins = function (ads) {
   mapPins.appendChild(fragment);
 };
 
-var createAdverts = function (ads) {
+var renderAdvert = function (ads) {
   var adsTemplateElement = document.querySelector('template').content;
   var mapFiltersContainer = document.querySelector('.map__filters-container');
   adsTemplateElement.querySelector('h3').textContent = ads.offer.title;
@@ -122,5 +122,5 @@ var createAdverts = function (ads) {
 };
 
 generatePins(adverts);
-createAdverts(adverts[0]);
+renderAdvert(adverts[0]);
 
