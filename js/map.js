@@ -88,7 +88,7 @@ var generatePins = function (ads) {
   for (var i = 0; i < ADS_QUANTITY; i++) {
     var newPin = document.createElement('button');
     newPin.className = 'map__pin';
-    newPin.style.left = (ads[i].location.x + PIN_WIDTH / 2) + 'px';
+    newPin.style.left = (ads[i].location.x - PIN_WIDTH / 2) + 'px';
     newPin.style.top = (ads[i].location.y - PIN_HEIGHT) + 'px';
     newPin.innerHTML = '<img src="' + ads[i].author.avatar + '" width="40" height="40" draggable="false">';
     fragment.appendChild(newPin);
