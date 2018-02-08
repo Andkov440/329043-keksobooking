@@ -21,8 +21,6 @@ var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg',
 var PIN_WIDTH = 40;
 var PIN_HEIGHT = 70;
 
-
-
 var generateValueFromRange = function (min, max) {
   var rand = min + Math.random() * (max + 1 - min);
   rand = Math.floor(rand);
@@ -90,14 +88,15 @@ var generatePins = function (ads) {
   for (var i = 0; i < ADS_QUANTITY; i++) {
     var newPin = document.createElement('button');
     newPin.className = 'map__pin';
-    newPin.style = 'left: ' + ads[i].location.x + PIN_WIDTH / 2 + 'px; top: ' + ads[i].location.y + PIN_HEIGHT + 'px';
+    newPin.style.left = (ads[i].location.x + PIN_WIDTH / 2) + 'px';
+    newPin.style.top = (ads[i].location.y - PIN_HEIGHT) + 'px';
     newPin.innerHTML = '<img src="' + ads[i].author.avatar + '" width="40" height="40" draggable="false">';
     fragment.appendChild(newPin);
   }
   mapPins.appendChild(fragment);
 };
 
-var createAdvert = function (ads) {
+var createAdverts = function (ads) {
   var adsTemplateElement = document.querySelector('template').content;
   var mapFiltersContainer = document.querySelector('.map__filters-container');
   adsTemplateElement.querySelector('h3').textContent = ads.offer.title;
@@ -123,5 +122,5 @@ var createAdvert = function (ads) {
 };
 
 generatePins(adverts);
-createAdvert(adverts[0]);
+createAdverts(adverts[0]);
 
