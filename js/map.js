@@ -97,18 +97,18 @@ var generatePins = function (ads) {
 };
 
 var renderAdvert = function (advert) {
-  var adsTemplate = document.querySelector('template').content;
+  var advertTemplate = document.querySelector('template').content;
   var mapFiltersContainer = document.querySelector('.map__filters-container');
-  adsTemplate.querySelector('h3').textContent = advert.offer.title;
-  adsTemplate.querySelector('small').textContent = advert.offer.address;
-  adsTemplate.querySelector('.popup__price').textContent = advert.offer.price + ' &#x20bd;/ночь';
-  adsTemplate.querySelector('h4').textContent = HOUSE_TYPES[advert.offer.type];
-  adsTemplate.querySelector('p:nth-child(7)').textContent = advert.offer.rooms + ' комнаты для ' + advert.offer.guests + ' гостей';
-  adsTemplate.querySelector('p:nth-child(8)').textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
-  adsTemplate.querySelector('p:last-of-type').textContent = advert.offer.description;
-  adsTemplate.querySelector('.popup__avatar').src = advert.author.avatar;
+  advertTemplate.querySelector('h3').textContent = advert.offer.title;
+  advertTemplate.querySelector('small').textContent = advert.offer.address;
+  advertTemplate.querySelector('.popup__price').textContent = advert.offer.price + ' &#x20bd;/ночь';
+  advertTemplate.querySelector('h4').textContent = HOUSE_TYPES[advert.offer.type];
+  advertTemplate.querySelector('p:nth-child(7)').textContent = advert.offer.rooms + ' комнаты для ' + advert.offer.guests + ' гостей';
+  advertTemplate.querySelector('p:nth-child(8)').textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
+  advertTemplate.querySelector('p:last-of-type').textContent = advert.offer.description;
+  advertTemplate.querySelector('.popup__avatar').src = advert.author.avatar;
 
-  document.querySelector('.map').insertBefore(adsTemplate, mapFiltersContainer);
+  document.querySelector('.map').insertBefore(advertTemplate, mapFiltersContainer);
 
   removeChildren(document.querySelector('.popup__features'));
   for (var i = 0; i < advert.offer.features.length; i++) {
