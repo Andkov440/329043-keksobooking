@@ -125,7 +125,7 @@ var renderAdvert = function (advert) {
 
 generatePins(adverts);
 renderAdvert(adverts[0]);
-//console.log(renderAdvert(adverts[0]));
+
 
 var mapPinMain = document.querySelector('.map__pin--main');
 
