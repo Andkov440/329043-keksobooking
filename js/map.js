@@ -21,6 +21,9 @@ var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg',
 var PIN_WIDTH = 40;
 var PIN_HEIGHT = 70;
 
+var MAIN_PIN_HEIGHT = 70;
+var MAIN_PIN_WIDTH = 65;
+
 var generateValueFromRange = function (min, max) {
   var rand = min + Math.random() * (max + 1 - min);
   rand = Math.floor(rand);
@@ -79,7 +82,6 @@ var createAdverts = function () {
   return similarAds;
 };
 
-document.querySelector('.map').classList.remove('map--faded');
 var adverts = createAdverts();
 
 var generatePins = function (ads) {
@@ -123,4 +125,34 @@ var renderAdvert = function (advert) {
 
 generatePins(adverts);
 renderAdvert(adverts[0]);
+//console.log(renderAdvert(adverts[0]));
 
+var mapPinMain = document.querySelector('.map__pin--main');
+
+var mapPinMainMouseupCancelStateHandler = function () {
+  document.querySelector('.map').classList.remove('map--faded');
+  document.querySelector('.notice__form').classList.remove('notice__form--disabled');
+  document.querySelector('.notice__form').elements.disabled = false;
+};
+var pinCenterX = mapPinMain.offsetTop + MAIN_PIN_HEIGHT / 2;
+var pinCenterY = mapPinMain.offsetLeft + MAIN_PIN_HEIGHT / 2;
+var formAddress = document.getElementById('address');
+formAddress.value = pinCenterX + ', ' + pinCenterY;
+
+var mapPinMainMouseupAddressHandler = function () {
+  var pinX = mapPinMain.offsetTop + MAIN_PIN_HEIGHT;
+  var pinY = mapPinMain.offsetLeft + Math.floor(MAIN_PIN_WIDTH / 2);
+  formAddress.value = pinX + ', ' + pinY;
+};
+
+mapPinMain.addEventListener('mouseup', mapPinMainMouseupCancelStateHandler);
+mapPinMain.addEventListener('mouseup', mapPinMainMouseupAddressHandler);
+
+
+var mapPin = document.querySelectorAll('.map__pin');
+for (var i = 0; i < ADS_QUANTITY; i++) {
+  var mapPinClickHandler = function () {
+    renderAdvert(adverts[i]);
+  };
+  mapPin[i].addEventListener('click', mapPinClickHandler);
+}
