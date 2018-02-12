@@ -101,7 +101,8 @@ var generatePins = function (ads) {
 };
 
 var renderAdvert = function (advert) {
-  var advertTemplate = document.querySelector('template').content;
+  var cloneTemplate = document.querySelector('template').cloneNode(true);
+  var advertTemplate = cloneTemplate.content;
   var mapFiltersContainer = document.querySelector('.map__filters-container');
   advertTemplate.querySelector('h3').textContent = advert.offer.title;
   advertTemplate.querySelector('small').textContent = advert.offer.address;
@@ -111,7 +112,6 @@ var renderAdvert = function (advert) {
   advertTemplate.querySelector('p:nth-child(8)').textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
   advertTemplate.querySelector('p:last-of-type').textContent = advert.offer.description;
   advertTemplate.querySelector('.popup__avatar').src = advert.author.avatar;
-
   document.querySelector('.map').insertBefore(advertTemplate, mapFiltersContainer);
 
   removeChildren(document.querySelector('.popup__features'));
