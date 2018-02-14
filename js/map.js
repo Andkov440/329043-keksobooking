@@ -99,10 +99,20 @@ var generatePins = function (ads) {
   }
   mapPins.appendChild(fragment);
 };
+
 var map = document.querySelector('.map');
+var removeMapCard = function () {
+  var mapCard = map.querySelector('.map__card');
+  if (mapCard) {
+    map.removeChild(mapCard);
+  }
+};
+
 var renderAdvert = function (advert) {
   var cloneTemplate = document.querySelector('template').cloneNode(true);
-  var advertTemplate = cloneTemplate.content;
+  var test = cloneTemplate.content;
+  var advertTemplate = test.querySelector('.map__card');
+
   var mapFiltersContainer = document.querySelector('.map__filters-container');
   advertTemplate.querySelector('h3').textContent = advert.offer.title;
   advertTemplate.querySelector('small').textContent = advert.offer.address;
@@ -123,17 +133,31 @@ var renderAdvert = function (advert) {
   for (i = 0; i < advert.offer.photos.length; i++) {
     document.querySelector('.popup__pictures').innerHTML += '<li><img src="' + advert.offer.photos[i] + '" width="50" height="50"></li>';
   }
+
+  var popupClose = document.querySelector('.popup__close');
+
+  var popupRemove = function () {
+    removeMapCard();
+    popupClose.removeEventListener('click', popupCloseClickHandler);
+    popupClose.removeEventListener('keydown', popupEscPressHandler);
+  };
+
+  var popupCloseClickHandler = function () {
+    popupRemove();
+  };
+
+  var popupEscPressHandler = function (evt) {
+    if ((evt.keyCode === 27) || (evt.keyCode === 13)) {
+      popupRemove();
+    }
+  };
+
+  popupClose.addEventListener('click', popupCloseClickHandler);
+  popupClose.addEventListener('keydown', popupEscPressHandler);
 };
 
 generatePins(adverts);
 var mapPinMain = document.querySelector('.map__pin--main');
-
-var removeMapCard = function () {
-  var mapCard = map.querySelector('.map__card');
-  if (mapCard) {
-    map.removeChild(mapCard);
-  }
-};
 
 var mainPinMouseupHandler = function () {
   document.querySelector('.map').classList.remove('map--faded');
@@ -168,10 +192,3 @@ var mapPinClickHandler = function (evt) {
   }
 };
 mapPins.addEventListener('click', mapPinClickHandler);
-
-var popupClose = document.querySelector('.popup__close');
-//console.log(popupClose.content);
-popupClose.addEventListener('mouseup', function () {
-  removeMapCard();
-});
-
