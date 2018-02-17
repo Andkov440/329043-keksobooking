@@ -160,6 +160,8 @@ var removeMapCard = function () {
   var mapCard = map.querySelector('.map__card');
   if (mapCard) {
     map.removeChild(mapCard);
+    mapPins.addEventListener('click', mapPinClickHandler);
+    mapPins.addEventListener('keydown', mapPinEnterPressHandler);
   }
 };
 
@@ -201,9 +203,10 @@ var mapPinClickHandler = function (evt) {
 
 var mapPinEnterPressHandler = function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
-    mapPinClickHandler();
+    mapPinClickHandler(evt);
   }
 };
+
 mapPins.addEventListener('click', mapPinClickHandler);
 mapPins.addEventListener('keydown', mapPinEnterPressHandler);
 
