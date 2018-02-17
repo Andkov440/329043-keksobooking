@@ -24,6 +24,9 @@ var PIN_HEIGHT = 70;
 var MAIN_PIN_HEIGHT = 70;
 var MAIN_PIN_WIDTH = 65;
 
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+
 var generateValueFromRange = function (min, max) {
   var rand = min + Math.random() * (max + 1 - min);
   rand = Math.floor(rand);
@@ -101,17 +104,10 @@ var generatePins = function (ads) {
 };
 
 var map = document.querySelector('.map');
-var removeMapCard = function () {
-  var mapCard = map.querySelector('.map__card');
-  if (mapCard) {
-    map.removeChild(mapCard);
-  }
-};
 
 var renderAdvert = function (advert) {
   var cloneTemplate = document.querySelector('template').cloneNode(true);
-  var test = cloneTemplate.content;
-  var advertTemplate = test.querySelector('.map__card');
+  var advertTemplate = cloneTemplate.content.querySelector('.map__card');
 
   var mapFiltersContainer = document.querySelector('.map__filters-container');
   advertTemplate.querySelector('h3').textContent = advert.offer.title;
@@ -134,26 +130,37 @@ var renderAdvert = function (advert) {
     document.querySelector('.popup__pictures').innerHTML += '<li><img src="' + advert.offer.photos[i] + '" width="50" height="50"></li>';
   }
 
-  var popupClose = document.querySelector('.popup__close');
+  var closePopup = document.querySelector('.popup__close');
 
-  var popupRemove = function () {
+  var removePopup = function () {
     removeMapCard();
-    popupClose.removeEventListener('click', popupCloseClickHandler);
-    popupClose.removeEventListener('keydown', popupEscPressHandler);
+    closePopup.removeEventListener('click', removePopup);
+    closePopup.removeEventListener('keydown', popupEnterPressHandler);
+    document.removeEventListener('keydown', popupEscPressHandler);
   };
 
-  var popupCloseClickHandler = function () {
-    popupRemove();
-  };
-
-  var popupEscPressHandler = function (evt) {
-    if ((evt.keyCode === 27) || (evt.keyCode === 13)) {
-      popupRemove();
+  var popupEnterPressHandler = function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      removePopup();
     }
   };
 
-  popupClose.addEventListener('click', popupCloseClickHandler);
-  popupClose.addEventListener('keydown', popupEscPressHandler);
+  var popupEscPressHandler = function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      removePopup();
+    }
+  };
+
+  closePopup.addEventListener('click', removePopup);
+  closePopup.addEventListener('keydown', popupEnterPressHandler);
+  document.addEventListener('keydown', popupEscPressHandler);
+};
+
+var removeMapCard = function () {
+  var mapCard = map.querySelector('.map__card');
+  if (mapCard) {
+    map.removeChild(mapCard);
+  }
 };
 
 generatePins(adverts);
@@ -191,4 +198,13 @@ var mapPinClickHandler = function (evt) {
     renderAdvert(adverts[offerId]);
   }
 };
+
+var mapPinEnterPressHandler = function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    mapPinClickHandler();
+  }
+};
 mapPins.addEventListener('click', mapPinClickHandler);
+mapPins.addEventListener('keydown', mapPinEnterPressHandler);
+
+
