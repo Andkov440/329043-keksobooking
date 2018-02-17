@@ -132,36 +132,31 @@ var renderAdvert = function (advert) {
 
   var closePopup = document.querySelector('.popup__close');
 
-  var removePopup = function () {
-    removeMapCard();
-    closePopup.removeEventListener('click', removePopup);
-    closePopup.removeEventListener('keydown', popupEnterPressHandler);
-    document.removeEventListener('keydown', popupEscPressHandler);
-  };
-
-  var popupEnterPressHandler = function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
-      removePopup();
-    }
-  };
-
-  var popupEscPressHandler = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      removePopup();
-    }
-  };
-
-  closePopup.addEventListener('click', removePopup);
+  closePopup.addEventListener('click', removeMapCard);
   closePopup.addEventListener('keydown', popupEnterPressHandler);
   document.addEventListener('keydown', popupEscPressHandler);
+};
+
+var popupEnterPressHandler = function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    removeMapCard();
+  }
+};
+
+var popupEscPressHandler = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    removeMapCard();
+  }
 };
 
 var removeMapCard = function () {
   var mapCard = map.querySelector('.map__card');
   if (mapCard) {
+    var closePopup = document.querySelector('.popup__close');
+    closePopup.removeEventListener('click', removeMapCard);
+    closePopup.removeEventListener('keydown', popupEnterPressHandler);
+    document.removeEventListener('keydown', popupEscPressHandler);
     map.removeChild(mapCard);
-    mapPins.addEventListener('click', mapPinClickHandler);
-    mapPins.addEventListener('keydown', mapPinEnterPressHandler);
   }
 };
 
@@ -209,5 +204,3 @@ var mapPinEnterPressHandler = function (evt) {
 
 mapPins.addEventListener('click', mapPinClickHandler);
 mapPins.addEventListener('keydown', mapPinEnterPressHandler);
-
-
