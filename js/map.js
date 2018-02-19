@@ -204,3 +204,48 @@ var mapPinEnterPressHandler = function (evt) {
 
 mapPins.addEventListener('click', mapPinClickHandler);
 mapPins.addEventListener('keydown', mapPinEnterPressHandler);
+
+var MIN_PRICES = [1000, 0, 5000, 10000];
+var housingType = document.querySelector('#type');
+var housingPrice = document.querySelector('#price');
+
+var timeIn = document.querySelector('#timein');
+var timeOut = document.querySelector('#timeout');
+
+var roomNumber = document.querySelector('#room_number');
+var roomCapacity = document.querySelector('#capacity');
+
+housingType.addEventListener('change', function () {
+  for (var i = 0; i < housingType.options.length; i++) {
+    var option = housingType.options[i];
+    if (option.selected) {
+      housingPrice.min = MIN_PRICES[i];
+    }
+  }
+});
+
+timeIn.addEventListener('change', function () {
+  for (var i = 0; i < timeIn.options.length; i++) {
+    var optionTimeIn = timeIn.options[i];
+    var optionTimeOut = timeOut.options[i];
+    if (optionTimeIn.selected) {
+      optionTimeOut.selected = true;
+    }
+  }
+});
+
+timeOut.addEventListener('change', function () {
+  for (var i = 0; i < timeOut.options.length; i++) {
+    var optionTimeIn = timeIn.options[i];
+    var optionTimeOut = timeOut.options[i];
+    if (optionTimeOut.selected) {
+      optionTimeIn.selected = true;
+    }
+  }
+});
+
+roomNumber.addEventListener('change', function () {
+  if ((roomNumber.option[0].selected === true) && (roomCapacity.option[2].selected !== true)) {
+    roomCapacity.setCustomValidity('Выберите количество мест для 1 гостя');
+  }
+});
