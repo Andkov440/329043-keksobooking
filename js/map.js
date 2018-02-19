@@ -204,3 +204,19 @@ var mapPinEnterPressHandler = function (evt) {
 
 mapPins.addEventListener('click', mapPinClickHandler);
 mapPins.addEventListener('keydown', mapPinEnterPressHandler);
+
+var MIN_PRICE = [1000, 0, 5000, 10000];
+var housingType = document.querySelector('#type');
+var housingPrice = document.querySelector('#price');
+
+housingType.addEventListener('change', function () {
+  for (var i = 0; i < housingType.options.length; i++) {
+    var option = housingType.options[i];
+    if (option.selected) {
+      housingPrice.min = MIN_PRICE[i];
+
+    }
+  }
+});
+
+
