@@ -27,6 +27,8 @@ var MAIN_PIN_WIDTH = 65;
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 
+var MIN_PRICES = {flat: 1000, bungalo: 0, house: 5000, palace: 10000};
+
 var generateValueFromRange = function (min, max) {
   var rand = min + Math.random() * (max + 1 - min);
   rand = Math.floor(rand);
@@ -205,18 +207,37 @@ var mapPinEnterPressHandler = function (evt) {
 mapPins.addEventListener('click', mapPinClickHandler);
 mapPins.addEventListener('keydown', mapPinEnterPressHandler);
 
-var MIN_PRICE = [1000, 0, 5000, 10000];
 var housingType = document.querySelector('#type');
 var housingPrice = document.querySelector('#price');
 
-housingType.addEventListener('change', function () {
-  for (var i = 0; i < housingType.options.length; i++) {
-    var option = housingType.options[i];
-    if (option.selected) {
-      housingPrice.min = MIN_PRICE[i];
+var timeIn = document.querySelector('#timein');
+var timeOut = document.querySelector('#timeout');
 
+var roomNumber = document.querySelector('#room_number');
+var roomCapacity = document.querySelector('#capacity');
+
+housingType.addEventListener('change', function (evt) {
+  var target = evt.target;
+  housingPrice.min = MIN_PRICES[target.value];
+});
+
+timeIn.addEventListener('change', function () {
+  timeOut.value = timeIn.value;
+});
+
+timeOut.addEventListener('change', function () {
+  timeIn.value = timeOut.value;
+});
+
+roomNumber.addEventListener('change', function (evt) {
+  var target = evt.target;
+  roomCapacity.value = target.value;
+  for (var i = 0; i < roomCapacity.options.length; i++) {
+    if (target.value >= roomCapacity.options[i].value) {
+      roomCapacity.options[i].disabled = false;
+    } else {
+      roomCapacity.options[i].disabled = true;
     }
   }
 });
-
 
