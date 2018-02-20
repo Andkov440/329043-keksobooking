@@ -215,7 +215,6 @@ var timeOut = document.querySelector('#timeout');
 
 var roomNumber = document.querySelector('#room_number');
 var roomCapacity = document.querySelector('#capacity');
-roomCapacity.value = roomNumber.value;
 
 housingType.addEventListener('change', function (evt) {
   var target = evt.target;
@@ -230,13 +229,11 @@ timeOut.addEventListener('change', function () {
   timeIn.value = timeOut.value;
 });
 
-roomNumber.addEventListener('change', function (evt) {
-
-  var target = evt.target;
-  if (+target.value !== 100) {
-    roomCapacity.value = target.value;
+var syncRoomsGuests = function (value) {
+  if (+value !== 100) {
+    roomCapacity.value = value;
     for (var i = 0; i < roomCapacity.options.length; i++) {
-      if (+target.value >= +roomCapacity.options[i].value && +roomCapacity.options[i].value !== 0) {
+      if (+value >= +roomCapacity.options[i].value && +roomCapacity.options[i].value !== 0) {
         roomCapacity.options[i].disabled = false;
       } else {
         roomCapacity.options[i].disabled = true;
@@ -250,4 +247,10 @@ roomNumber.addEventListener('change', function (evt) {
       }
     }
   }
+}
+syncRoomsGuests(roomNumber.value);
+
+roomNumber.addEventListener('change', function (evt) {
+  var target = evt.target;
+  syncRoomsGuests(target.value);
 });
