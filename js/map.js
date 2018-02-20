@@ -215,6 +215,7 @@ var timeOut = document.querySelector('#timeout');
 
 var roomNumber = document.querySelector('#room_number');
 var roomCapacity = document.querySelector('#capacity');
+roomCapacity.value = roomNumber.value;
 
 housingType.addEventListener('change', function (evt) {
   var target = evt.target;
@@ -230,6 +231,7 @@ timeOut.addEventListener('change', function () {
 });
 
 roomNumber.addEventListener('change', function (evt) {
+
   var target = evt.target;
   if (+target.value !== 100) {
     roomCapacity.value = target.value;
