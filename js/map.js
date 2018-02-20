@@ -247,7 +247,8 @@ var syncRoomsGuests = function (value) {
       }
     }
   }
-}
+};
+
 syncRoomsGuests(roomNumber.value);
 
 roomNumber.addEventListener('change', function (evt) {
