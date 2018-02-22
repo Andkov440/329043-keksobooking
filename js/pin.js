@@ -3,12 +3,11 @@
 (function () {
   var PIN_WIDTH = 40;
   var PIN_HEIGHT = 70;
-  var ENTER_KEYCODE = 13;
+  var mapPins = document.querySelector('.map__pins');
 
   window.generatePins = function (ads) {
-    var mapPins = document.querySelector('.map__pins');
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < ADS_QUANTITY; i++) {
+    for (var i = 0; i < window.data.ADS_QUANTITY; i++) {
       var newPin = document.createElement('button');
       newPin.className = 'map__pin';
       newPin.style.left = (ads[i].location.x - PIN_WIDTH / 2) + 'px';
@@ -20,24 +19,25 @@
     }
     mapPins.appendChild(fragment);
   };
-  var mapPins = document.querySelector('.map__pins');
+
+  var adverts = window.data.createAdverts();
 
   var mapPinClickHandler = function (evt) {
     var target = evt.target;
     if (target.getAttribute('offer-id')) {
       var offerId = target.getAttribute('offer-id');
-      removeMapCard();
-      renderAdvert(adverts[offerId]);
+      window.card.removeMapCard();
+      window.card.renderAdvert(adverts[offerId]);
     }
   };
 
   var mapPinEnterPressHandler = function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
+    if (evt.keyCode === window.data.ENTER_KEYCODE) {
       mapPinClickHandler(evt);
     }
   };
 
   mapPins.addEventListener('click', mapPinClickHandler);
   mapPins.addEventListener('keydown', mapPinEnterPressHandler);
-
+  window.generatePins(window.data.createAdverts());
 })();

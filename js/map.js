@@ -3,7 +3,7 @@
 var MAIN_PIN_HEIGHT = 70;
 var MAIN_PIN_WIDTH = 65;
 
-generatePins(adverts);
+
 var mapPinMain = document.querySelector('.map__pin--main');
 
 var mainPinMouseupHandler = function () {
