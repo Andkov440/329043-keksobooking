@@ -26,7 +26,7 @@
 
   var formAddress = document.querySelector('#address');
   formAddress.value = pinCenterX + ', ' + pinCenterY;
-// Перемещение пина
+
   var mainPinHandleHandler = function (evt) {
     evt.preventDefault();
 
@@ -44,7 +44,7 @@
         bottom: window.map.offsetHeight + window.map.offsetTop - mapPinMain.offsetHeight,
         left: window.map.offsetLeft + mapPinMain.offsetWidth
       };
-console.log(limits.right);
+
 
       var shift = {
         x: startCoords.x - moveEvt.clientX,
