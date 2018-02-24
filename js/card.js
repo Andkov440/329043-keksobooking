@@ -2,7 +2,6 @@
 
 (function () {
   var map = document.querySelector('.map');
-
   window.card = {
     renderAdvert: function (advert) {
       var cloneTemplate = document.querySelector('template').cloneNode(true);
@@ -31,7 +30,7 @@
 
       var closePopup = document.querySelector('.popup__close');
 
-      closePopup.addEventListener('click', window.removeMapCard);
+      closePopup.addEventListener('click', window.card.removeMapCard);
       closePopup.addEventListener('keydown', popupEnterPressHandler);
       document.addEventListener('keydown', popupEscPressHandler);
     },
