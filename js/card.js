@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var map = document.querySelector('.map');
   window.card = {
     renderAdvert: function (advert) {
       var cloneTemplate = document.querySelector('template').cloneNode(true);
@@ -15,7 +16,7 @@
       advertTemplate.querySelector('p:nth-child(8)').textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
       advertTemplate.querySelector('p:last-of-type').textContent = advert.offer.description;
       advertTemplate.querySelector('.popup__avatar').src = advert.author.avatar;
-      window.map.insertBefore(advertTemplate, mapFiltersContainer);
+      map.insertBefore(advertTemplate, mapFiltersContainer);
 
       window.data.removeChildren(document.querySelector('.popup__features'));
       for (var i = 0; i < advert.offer.features.length; i++) {
@@ -29,19 +30,19 @@
 
       var closePopup = document.querySelector('.popup__close');
 
-      closePopup.addEventListener('click', window.removeMapCard);
+      closePopup.addEventListener('click', window.card.removeMapCard);
       closePopup.addEventListener('keydown', popupEnterPressHandler);
       document.addEventListener('keydown', popupEscPressHandler);
     },
 
     removeMapCard: function () {
-      var mapCard = window.map.querySelector('.map__card');
+      var mapCard = map.querySelector('.map__card');
       if (mapCard) {
         var closePopup = document.querySelector('.popup__close');
         closePopup.removeEventListener('click', window.removeMapCard);
         closePopup.removeEventListener('keydown', popupEnterPressHandler);
         document.removeEventListener('keydown', popupEscPressHandler);
-        window.map.removeChild(mapCard);
+        map.removeChild(mapCard);
       }
     }
   };
