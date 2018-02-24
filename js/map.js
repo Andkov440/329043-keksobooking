@@ -6,9 +6,15 @@
   var TOP_LIMIT = 150;
   var BOTTOM_LIMIT = 500;
 
-
-  var mapPinMain = document.querySelector('.map__pin--main');
   var map = document.querySelector('.map');
+  var mapPinMain = document.querySelector('.map__pin--main');
+
+  var LIMITS = {
+    RIGHT: map.offsetWidth,
+    LEFT: mapPinMain.offsetWidth,
+    TOP: map.offsetTop + TOP_LIMIT,
+    BOTTOM: map.offsetTop + BOTTOM_LIMIT
+  };
 
   var mainPinMouseUpHandler = function () {
     document.querySelector('.map').classList.remove('map--faded');
@@ -40,13 +46,6 @@
     var mainPinMouseMoveHandler = function (moveEvt) {
       moveEvt.preventDefault();
 
-      var limits = {
-        right: map.offsetWidth,
-        left: mapPinMain.offsetWidth,
-        top: map.offsetTop + TOP_LIMIT,
-        bottom: map.offsetTop + BOTTOM_LIMIT
-      };
-
       var pinY = mapPinMain.offsetTop + MAIN_PIN_HEIGHT;
       var pinX = mapPinMain.offsetLeft + Math.floor(MAIN_PIN_WIDTH / 2);
 
@@ -60,10 +59,10 @@
         y: moveEvt.clientY
       };
 
-      if ((pinX - shift.x <= limits.right) && (pinX - shift.x >= limits.left)) {
+      if ((pinX - shift.x <= LIMITS.RIGHT) && (pinX - shift.x >= LIMITS.LEFT)) {
         mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
       }
-      if ((pinY - shift.y <= limits.bottom) && (pinY - shift.y >= limits.top)) {
+      if ((pinY - shift.y <= LIMITS.BOTTOM) && (pinY - shift.y >= LIMITS.TOP)) {
         mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
       }
     };
