@@ -20,14 +20,14 @@
     mapPins.appendChild(fragment);
   };
 
-  var adverts = window.data.createAdverts();
-
   var mapPinClickHandler = function (evt) {
     var target = evt.target;
     if (target.getAttribute('offer-id')) {
       var offerId = target.getAttribute('offer-id');
       window.card.removeMapCard();
-      window.card.renderAdvert(adverts[offerId]);
+      window.load(function (adverts) {
+        window.card.renderAdvert(adverts[offerId]);
+      }, window.errorHandler);
     }
   };
 

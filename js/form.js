@@ -12,6 +12,8 @@
   var roomNumber = document.querySelector('#room_number');
   var roomCapacity = document.querySelector('#capacity');
 
+  var advertForm = document.querySelector('.notice__form');
+
   housingType.addEventListener('change', function (evt) {
     var target = evt.target;
     housingPrice.min = MIN_PRICES[target.value];
@@ -50,5 +52,32 @@
   roomNumber.addEventListener('change', function (evt) {
     var target = evt.target;
     syncRoomsGuests(target.value);
+  });
+
+  var form = document.querySelector('.notice__form');
+  form.addEventListener('submit', function (evt) {
+    window.upload(new FormData(form), function () {
+      var advertFormElements = advertForm.elements;
+      for (var i = 0; i < advertFormElements.length; i++) {
+        var fieldType = advertFormElements[i].type;
+        switch (fieldType) {
+          case 'checkbox':
+            if (advertFormElements[i].checked) {
+              advertFormElements[i].checked = false;
+            }
+            break;
+          case 'text':
+          case 'number':
+          case 'textarea':
+            advertFormElements[i].value = '';
+            break;
+          case 'select-one':
+            advertFormElements[i].selectedIndex = 0;
+            syncRoomsGuests(roomNumber.value);
+            break;
+        }
+      }
+    }, window.errorHandler);
+    evt.preventDefault();
   });
 })();
