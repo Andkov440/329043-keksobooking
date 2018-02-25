@@ -9,7 +9,7 @@
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
 
-  var LIMITS = {
+  var Limits = {
     RIGHT: map.offsetWidth,
     LEFT: mapPinMain.offsetWidth,
     TOP: map.offsetTop + TOP_LIMIT,
@@ -59,10 +59,10 @@
         y: moveEvt.clientY
       };
 
-      if ((pinX - shift.x <= LIMITS.RIGHT) && (pinX - shift.x >= LIMITS.LEFT)) {
+      if ((pinX - shift.x <= Limits.RIGHT) && (pinX - shift.x >= Limits.LEFT)) {
         mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
       }
-      if ((pinY - shift.y <= LIMITS.BOTTOM) && (pinY - shift.y >= LIMITS.TOP)) {
+      if ((pinY - shift.y <= Limits.BOTTOM) && (pinY - shift.y >= Limits.TOP)) {
         mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
       }
     };
