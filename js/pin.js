@@ -15,12 +15,14 @@
         newPin.style.top = (ads[i].location.y - PIN_HEIGHT) + 'px';
         newPin.innerHTML = '<img src="' + ads[i].author.avatar + '" width="40" height="40" draggable="false" offer-id="' + i + '">';
         newPin.setAttribute('offer-id', i);
+        newPin.style.display = 'none';
         fragment.appendChild(newPin);
       }
       mapPins.appendChild(fragment);
     }, window.backend.errorHandler);
   };
 
+  window.generatePins();
   var mapPinClickHandler = function (evt) {
     var target = evt.target;
     if (target.getAttribute('offer-id')) {

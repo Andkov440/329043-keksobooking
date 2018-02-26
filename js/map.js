@@ -36,7 +36,11 @@
     var pinY = mapPinMain.offsetTop + window.map.MAIN_PIN_HEIGHT;
     var pinX = mapPinMain.offsetLeft + Math.floor(window.map.MAIN_PIN_WIDTH / 2);
     formAddress.value = pinX + ', ' + pinY;
-    window.generatePins();
+    var mapPinsAll = document.querySelectorAll('.map__pin');
+    for (var i = 0; i < mapPinsAll.length; i++) {
+      mapPinsAll[i].style.display = 'block';
+    }
+
   };
 
   var pinCenterX = mapPinMain.offsetTop + window.map.MAIN_PIN_WIDTH / 2;
