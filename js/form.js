@@ -12,7 +12,12 @@
   var roomNumber = document.querySelector('#room_number');
   var roomCapacity = document.querySelector('#capacity');
 
-  var advertForm = document.querySelector('.notice__form');
+  var form = document.querySelector('.notice__form');
+  var formAddress = document.querySelector('#address');
+
+  var mapPinMain = document.querySelector('.map__pin--main');
+  var pinCenterX = mapPinMain.offsetTop + window.map.MAIN_PIN_WIDTH / 2;
+  var pinCenterY = mapPinMain.offsetLeft + window.map.MAIN_PIN_HEIGHT / 2;
 
   housingType.addEventListener('change', function (evt) {
     var target = evt.target;
@@ -54,30 +59,24 @@
     syncRoomsGuests(target.value);
   });
 
-  var form = document.querySelector('.notice__form');
   form.addEventListener('submit', function (evt) {
-    window.upload(new FormData(form), function () {
-      var advertFormElements = advertForm.elements;
-      for (var i = 0; i < advertFormElements.length; i++) {
-        var fieldType = advertFormElements[i].type;
-        switch (fieldType) {
-          case 'checkbox':
-            if (advertFormElements[i].checked) {
-              advertFormElements[i].checked = false;
-            }
-            break;
-          case 'text':
-          case 'number':
-          case 'textarea':
-            advertFormElements[i].value = '';
-            break;
-          case 'select-one':
-            advertFormElements[i].selectedIndex = 0;
-            syncRoomsGuests(roomNumber.value);
-            break;
-        }
-      }
-    }, window.errorHandler);
     evt.preventDefault();
+    window.backend.upload(new FormData(form), function () {
+      form.reset();
+      syncRoomsGuests(roomNumber.value);
+      document.querySelector('.map').classList.add('map--faded');
+      form.classList.add('notice__form--disabled');
+      form.elements.disabled = true;
+      var mapPinsAll = document.querySelectorAll('.map__pin');
+      for (var i = 0; i < mapPinsAll.length; i++) {
+        mapPinsAll[i].style.display = 'none';
+      }
+      mapPinMain.style.display = 'block';
+      mapPinMain.style.left = '50%';
+      mapPinMain.style.top = '50%';
+      formAddress.value = pinCenterX + ', ' + pinCenterY;
+      window.card.removeMapCard();
+
+    }, window.backend.errorHandler);
   });
 })();

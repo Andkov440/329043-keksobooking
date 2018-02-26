@@ -1,8 +1,7 @@
 'use strict';
 
 (function () {
-  var MAIN_PIN_HEIGHT = 70;
-  var MAIN_PIN_WIDTH = 65;
+
   var TOP_LIMIT = 150;
   var BOTTOM_LIMIT = 500;
 
@@ -16,21 +15,32 @@
     BOTTOM: map.offsetTop + BOTTOM_LIMIT
   };
 
+  window.map = {
+    HOUSE_TYPES: {flat: 'Квартира', house: 'Дом', bungalo: 'Бунгало'},
+    ESC_KEYCODE: 27,
+    ENTER_KEYCODE: 13,
+    MAIN_PIN_HEIGHT: 70,
+    MAIN_PIN_WIDTH: 65,
+
+    removeChildren: function (elem) {
+      while (elem.lastChild) {
+        elem.removeChild(elem.lastChild);
+      }
+    }
+  };
+
   var mainPinMouseUpHandler = function () {
     document.querySelector('.map').classList.remove('map--faded');
     document.querySelector('.notice__form').classList.remove('notice__form--disabled');
     document.querySelector('.notice__form').elements.disabled = false;
-    var pinY = mapPinMain.offsetTop + MAIN_PIN_HEIGHT;
-    var pinX = mapPinMain.offsetLeft + Math.floor(MAIN_PIN_WIDTH / 2);
+    var pinY = mapPinMain.offsetTop + window.map.MAIN_PIN_HEIGHT;
+    var pinX = mapPinMain.offsetLeft + Math.floor(window.map.MAIN_PIN_WIDTH / 2);
     formAddress.value = pinX + ', ' + pinY;
-    var mapPinsAll = document.querySelectorAll('.map__pin');
-    for (var i = 0; i < mapPinsAll.length; i++) {
-      mapPinsAll[i].style.display = 'block';
-    }
+    window.generatePins();
   };
 
-  var pinCenterX = mapPinMain.offsetTop + MAIN_PIN_WIDTH / 2;
-  var pinCenterY = mapPinMain.offsetLeft + MAIN_PIN_HEIGHT / 2;
+  var pinCenterX = mapPinMain.offsetTop + window.map.MAIN_PIN_WIDTH / 2;
+  var pinCenterY = mapPinMain.offsetLeft + window.map.MAIN_PIN_HEIGHT / 2;
 
   var formAddress = document.querySelector('#address');
   formAddress.value = pinCenterX + ', ' + pinCenterY;
@@ -46,8 +56,8 @@
     var mainPinMouseMoveHandler = function (moveEvt) {
       moveEvt.preventDefault();
 
-      var pinY = mapPinMain.offsetTop + MAIN_PIN_HEIGHT;
-      var pinX = mapPinMain.offsetLeft + Math.floor(MAIN_PIN_WIDTH / 2);
+      var pinY = mapPinMain.offsetTop + window.map.MAIN_PIN_HEIGHT;
+      var pinX = mapPinMain.offsetLeft + Math.floor(window.map.MAIN_PIN_WIDTH / 2);
 
       var shift = {
         x: startCoords.x - moveEvt.clientX,
@@ -69,8 +79,8 @@
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      var pinY = mapPinMain.offsetTop + MAIN_PIN_HEIGHT;
-      var pinX = mapPinMain.offsetLeft + Math.floor(MAIN_PIN_WIDTH / 2);
+      var pinY = mapPinMain.offsetTop + window.map.MAIN_PIN_HEIGHT;
+      var pinX = mapPinMain.offsetLeft + Math.floor(window.map.MAIN_PIN_WIDTH / 2);
       formAddress.value = pinX + ', ' + pinY;
       document.removeEventListener('mousemove', mainPinMouseMoveHandler);
       document.removeEventListener('mouseup', onMouseUp);
