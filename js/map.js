@@ -7,6 +7,7 @@
 
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
+  var isDataLoad = false;
 
   var Limits = {
     RIGHT: map.offsetWidth,
@@ -40,7 +41,12 @@
     for (var i = 0; i < mapPinsAll.length; i++) {
       mapPinsAll[i].style.display = 'block';
     }
-
+    if (isDataLoad === false) {
+      window.backend.load(function (adverts) {
+        window.data = adverts;
+      }, window.backend.errorHandler);
+      isDataLoad = true;
+    }
   };
 
   var pinCenterX = mapPinMain.offsetTop + window.map.MAIN_PIN_WIDTH / 2;

@@ -23,14 +23,13 @@
   };
 
   window.generatePins();
+
   var mapPinClickHandler = function (evt) {
     var target = evt.target;
     if (target.getAttribute('offer-id')) {
       var offerId = target.getAttribute('offer-id');
       window.card.removeMapCard();
-      window.backend.load(function (adverts) {
-        window.card.renderAdvert(adverts[offerId]);
-      }, window.backend.errorHandler);
+      window.card.renderAdvert(window.data[offerId]);
     }
   };
 

@@ -15,9 +15,11 @@
   var form = document.querySelector('.notice__form');
   var formAddress = document.querySelector('#address');
 
+  var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
   var pinCenterX = mapPinMain.offsetTop + window.map.MAIN_PIN_WIDTH / 2;
   var pinCenterY = mapPinMain.offsetLeft + window.map.MAIN_PIN_HEIGHT / 2;
+  var mapPinsAll = document.querySelectorAll('.map__pin');
 
   housingType.addEventListener('change', function (evt) {
     var target = evt.target;
@@ -64,10 +66,9 @@
     window.backend.upload(new FormData(form), function () {
       form.reset();
       syncRoomsGuests(roomNumber.value);
-      document.querySelector('.map').classList.add('map--faded');
+      map.classList.add('map--faded');
       form.classList.add('notice__form--disabled');
       form.elements.disabled = true;
-      var mapPinsAll = document.querySelectorAll('.map__pin');
       for (var i = 0; i < mapPinsAll.length; i++) {
         mapPinsAll[i].style.display = 'none';
       }
