@@ -37,16 +37,16 @@
     var pinY = mapPinMain.offsetTop + window.map.MAIN_PIN_HEIGHT;
     var pinX = mapPinMain.offsetLeft + Math.floor(window.map.MAIN_PIN_WIDTH / 2);
     formAddress.value = pinX + ', ' + pinY;
-    var mapPinsAll = document.querySelectorAll('.map__pin');
-    for (var i = 0; i < mapPinsAll.length; i++) {
-      mapPinsAll[i].style.display = 'block';
-    }
     if (isDataLoad === false) {
       window.backend.load(function (adverts) {
         window.data = adverts;
+        window.generatePins(window.data);
       }, window.backend.errorHandler);
-      isDataLoad = true;
+    } else {
+      window.generatePins(window.data);
     }
+    isDataLoad = true;
+
   };
 
   var pinCenterX = mapPinMain.offsetTop + window.map.MAIN_PIN_WIDTH / 2;
