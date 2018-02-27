@@ -21,7 +21,6 @@
 
   window.removePins = function () {
     var mapPinsElements = mapPins.children;
-
     for (var i = mapPinsElements.length - 1; i >= 0; i--) {
       if (mapPinsElements[i].hasAttribute('offer-id')) {
         mapPins.removeChild(mapPinsElements[i]);

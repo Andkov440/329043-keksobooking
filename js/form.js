@@ -20,8 +20,6 @@
   var pinCenterX = mapPinMain.offsetTop + window.map.MAIN_PIN_WIDTH / 2;
   var pinCenterY = mapPinMain.offsetLeft + window.map.MAIN_PIN_HEIGHT / 2;
 
-  var mapPins = document.querySelector('.map__pins');
-
   housingType.addEventListener('change', function (evt) {
     var target = evt.target;
     housingPrice.min = MIN_PRICES[target.value];
