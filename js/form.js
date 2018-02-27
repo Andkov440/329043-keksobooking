@@ -72,13 +72,7 @@
       map.classList.add('map--faded');
       form.classList.add('notice__form--disabled');
       form.elements.disabled = true;
-      var mapPinsElements = mapPins.children;
-
-      for (var i = mapPinsElements.length - 1; i >= 0; i--) {
-        if (mapPinsElements[i].hasAttribute('offer-id')) {
-          mapPins.removeChild(mapPinsElements[i]);
-        }
-      }
+      window.removePins();
 
       mapPinMain.style.display = 'block';
       mapPinMain.style.left = '50%';

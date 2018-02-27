@@ -19,6 +19,42 @@
     mapPins.appendChild(fragment);
   };
 
+  window.removePins = function () {
+    var mapPinsElements = mapPins.children;
+
+    for (var i = mapPinsElements.length - 1; i >= 0; i--) {
+      if (mapPinsElements[i].hasAttribute('offer-id')) {
+        mapPins.removeChild(mapPinsElements[i]);
+      }
+    }
+  };
+
+  var housingType = document.querySelector('#housing-type');
+
+  housingType.addEventListener('change', function (evt) {
+    var target = evt.target;
+    if (target !== housingType.firstChild) {
+      var filteredPins = window.data.filter(function (ad) {
+        return ad.offer.type === target.value;
+      });
+    } else {
+      window.generatePins(window.data);
+    }
+
+    window.removePins();
+    window.generatePins(filteredPins);
+
+    var mapPinClickHandler = function (e) {
+      var newtarget = e.target;
+      if (newtarget.getAttribute('offer-id')) {
+        var offerId = newtarget.getAttribute('offer-id');
+        window.card.removeMapCard();
+        window.card.renderAdvert(filteredPins[offerId]);
+      }
+    };
+    mapPins.addEventListener('click', mapPinClickHandler);
+  });
+
   var mapPinClickHandler = function (evt) {
     var target = evt.target;
     if (target.getAttribute('offer-id')) {
