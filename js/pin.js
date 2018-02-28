@@ -29,37 +29,56 @@
   };
 
   var housingType = document.querySelector('#housing-type');
+  var housingPrice = document.querySelector('#housing-price');
+  var housingRooms = document.querySelector('#housing-rooms');
+  // var housingFeatures = document.querySelector('#housing-features');
 
-  housingType.addEventListener('change', function (evt) {
-    var target = evt.target;
-    if (target !== housingType.firstChild) {
-      var filteredPins = window.data.filter(function (ad) {
-        return ad.offer.type === target.value;
-      });
-    } else {
-      window.generatePins(window.data);
+  // Массив на основании которого мы будем рендерить пины
+  var filteredOffers = window.data;
+
+  // Функции фильтрации для каждого типа
+  var byHouseType = function (ad) {
+    return housingType.value === 'any' ? true : housingType.value === ad.offer.type;
+  };
+
+  var byPrice = function (ad) {
+    switch (housingPrice.value) {
+      case 'low':
+        return ad.offer.price < 10000;
+      case 'middle':
+        return (ad.offer.price >= 10000) && (ad.offer.price <= 50000);
+      case 'high':
+        return ad.offer.price > 50000;
+      default:
+        return true;
     }
+  };
 
+  var byRooms = function (ad) {
+    return housingRooms.value === 'any' ? true : housingRooms.value === ad.offer.rooms;
+  };
+  // var byGuests = function (ad) {};
+  // var byFeatures = function (ad) {};
+
+  var filterPins = function () {
     window.removePins();
-    window.generatePins(filteredPins);
+    // filteredOffers = window.data.filter(byHouseType).filter(byPrice).filter(byRooms).filter(byGuests).filter(byFeatures);
+    filteredOffers = window.data.filter(byHouseType).filter(byPrice).filter(byRooms);
 
-    var mapPinClickHandler = function (e) {
-      var newtarget = e.target;
-      if (newtarget.getAttribute('offer-id')) {
-        var offerId = newtarget.getAttribute('offer-id');
-        window.card.removeMapCard();
-        window.card.renderAdvert(filteredPins[offerId]);
-      }
-    };
-    mapPins.addEventListener('click', mapPinClickHandler);
-  });
+    window.generatePins(filteredOffers);
+  };
+
+  housingType.addEventListener('change', filterPins);
+  housingPrice.addEventListener('change', filterPins);
+  housingRooms.addEventListener('change', filterPins);
+  // housingFeatures.addEventListener('change', filterPins);
 
   var mapPinClickHandler = function (evt) {
     var target = evt.target;
     if (target.getAttribute('offer-id')) {
       var offerId = target.getAttribute('offer-id');
       window.card.removeMapCard();
-      window.card.renderAdvert(window.data[offerId]);
+      window.card.renderAdvert(filteredOffers[offerId]);
     }
   };
 
