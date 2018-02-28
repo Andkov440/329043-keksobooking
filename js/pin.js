@@ -31,7 +31,9 @@
   var housingType = document.querySelector('#housing-type');
   var housingPrice = document.querySelector('#housing-price');
   var housingRooms = document.querySelector('#housing-rooms');
-  // var housingFeatures = document.querySelector('#housing-features');
+  var housingGuests = document.querySelector('#housing-guests');
+  var housingFeatures = document.querySelector('#housing-features');
+  var checkboxFeatures = housingFeatures.querySelectorAll('input[type="checkbox"]');
 
   // Массив на основании которого мы будем рендерить пины
   var filteredOffers = window.data;
@@ -55,15 +57,26 @@
   };
 
   var byRooms = function (ad) {
-    return housingRooms.value === 'any' ? true : housingRooms.value === ad.offer.rooms;
+    return housingRooms.value === 'any' ? true : +housingRooms.value === ad.offer.rooms;
   };
-  // var byGuests = function (ad) {};
-  // var byFeatures = function (ad) {};
+
+  var byGuests = function (ad) {
+    return housingGuests.value === 'any' ? true : +housingGuests.value === ad.offer.guests;
+  };
+
+  var byFeatures = function (ad) {
+    for (var i = 0; i < checkboxFeatures.length; i++) {
+      if (checkboxFeatures[i].checked) {
+        var test = ad.offer.features[i].indexOf(checkboxFeatures[i].value);
+      }
+    }
+    return test;
+  };
 
   var filterPins = function () {
     window.removePins();
-    // filteredOffers = window.data.filter(byHouseType).filter(byPrice).filter(byRooms).filter(byGuests).filter(byFeatures);
-    filteredOffers = window.data.filter(byHouseType).filter(byPrice).filter(byRooms);
+
+    filteredOffers = window.data.filter(byHouseType).filter(byPrice).filter(byRooms).filter(byGuests).filter(byFeatures);
 
     window.generatePins(filteredOffers);
   };
@@ -71,7 +84,8 @@
   housingType.addEventListener('change', filterPins);
   housingPrice.addEventListener('change', filterPins);
   housingRooms.addEventListener('change', filterPins);
-  // housingFeatures.addEventListener('change', filterPins);
+  housingGuests.addEventListener('change', filterPins);
+  housingFeatures.addEventListener('change', filterPins);
 
   var mapPinClickHandler = function (evt) {
     var target = evt.target;
