@@ -47,10 +47,6 @@
   var housingFeatures = document.querySelector('#housing-features');
   var checkboxFeatures = housingFeatures.querySelectorAll('input[type="checkbox"]');
 
-  // Массив на основании которого мы будем рендерить пины
-  //window.filteredOffers = window.data;
-
-  // Функции фильтрации для каждого типа
   var byHouseType = function (ad) {
     return housingType.value === 'any' ? true : housingType.value === ad.offer.type;
   };
@@ -97,7 +93,7 @@
         .filter(byGuests)
         .filter(byFeatures)
         .slice(0, 5);
-
+    window.card.removeMapCard();
     debounce(window.pin.generatePins(window.filteredOffers));
   };
 
