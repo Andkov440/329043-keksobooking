@@ -3,7 +3,9 @@
 (function () {
   var PIN_WIDTH = 40;
   var PIN_HEIGHT = 70;
+  var DEBOUNCE_INTERVAL = 500; // ms
   var mapPins = document.querySelector('.map__pins');
+
 
   window.generatePins = function (ads) {
     var fragment = document.createDocumentFragment();
@@ -28,6 +30,14 @@
     }
   };
 
+  var lastTimeout;
+  var debounce = function (fun) {
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(fun, DEBOUNCE_INTERVAL);
+  };
+
   var housingType = document.querySelector('#housing-type');
   var housingPrice = document.querySelector('#housing-price');
   var housingRooms = document.querySelector('#housing-rooms');
@@ -36,7 +46,7 @@
   var checkboxFeatures = housingFeatures.querySelectorAll('input[type="checkbox"]');
 
   // Массив на основании которого мы будем рендерить пины
-  var filteredOffers = window.data;
+  window.filteredOffers = window.data;
 
   // Функции фильтрации для каждого типа
   var byHouseType = function (ad) {
@@ -65,20 +75,22 @@
   };
 
   var byFeatures = function (ad) {
+    var checkedFeatures = [];
     for (var i = 0; i < checkboxFeatures.length; i++) {
       if (checkboxFeatures[i].checked) {
-        var test = ad.offer.features[i].indexOf(checkboxFeatures[i].value);
+        checkedFeatures.push(checkboxFeatures[i].value);
       }
     }
-    return test;
+    var isFeature = checkedFeatures.every(function (num) {
+      return ad.offer.features.indexOf(num) !== -1;
+    });
+    return isFeature;
   };
 
   var filterPins = function () {
     window.removePins();
-
-    filteredOffers = window.data.filter(byHouseType).filter(byPrice).filter(byRooms).filter(byGuests).filter(byFeatures);
-
-    window.generatePins(filteredOffers);
+    window.filteredOffers = window.data.filter(byHouseType).filter(byPrice).filter(byRooms).filter(byGuests).filter(byFeatures);
+    debounce(window.generatePins(window.filteredOffers));
   };
 
   housingType.addEventListener('change', filterPins);
@@ -92,7 +104,7 @@
     if (target.getAttribute('offer-id')) {
       var offerId = target.getAttribute('offer-id');
       window.card.removeMapCard();
-      window.card.renderAdvert(filteredOffers[offerId]);
+      window.card.renderAdvert(window.filteredOffers[offerId]);
     }
   };
 
