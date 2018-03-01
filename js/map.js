@@ -4,7 +4,6 @@
 
   var TOP_LIMIT = 150;
   var BOTTOM_LIMIT = 500;
-  var ADS_COUNT = 5;
 
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -40,12 +39,14 @@
     formAddress.value = pinX + ', ' + pinY;
     if (isDataLoad === false) {
       window.backend.load(function (adverts) {
-        window.data = adverts.slice(0, ADS_COUNT);
-        window.filteredOffers = adverts.slice(0, ADS_COUNT);
-        window.generatePins(window.data);
+        window.data = adverts;
+        window.filteredOffers = window.data.slice(0, 5);
+        window.pin.generatePins(window.filteredOffers);
       }, window.backend.errorHandler);
     } else {
-      window.generatePins(window.filteredOffers);
+      window.pin.removePins();
+      window.filteredOffers = window.data.slice(0, 5);
+      window.pin.generatePins(window.filteredOffers);
     }
     isDataLoad = true;
   };

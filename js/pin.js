@@ -7,25 +7,27 @@
   var mapPins = document.querySelector('.map__pins');
 
 
-  window.generatePins = function (ads) {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < ads.length; i++) {
-      var newPin = document.createElement('button');
-      newPin.className = 'map__pin';
-      newPin.style.left = (ads[i].location.x - PIN_WIDTH / 2) + 'px';
-      newPin.style.top = (ads[i].location.y - PIN_HEIGHT) + 'px';
-      newPin.innerHTML = '<img src="' + ads[i].author.avatar + '" width="40" height="40" draggable="false" offer-id="' + i + '">';
-      newPin.setAttribute('offer-id', i);
-      fragment.appendChild(newPin);
-    }
-    mapPins.appendChild(fragment);
-  };
+  window.pin = {
+    generatePins: function (ads) {
+      var fragment = document.createDocumentFragment();
+      for (var i = 0; i < ads.length; i++) {
+        var newPin = document.createElement('button');
+        newPin.className = 'map__pin';
+        newPin.style.left = (ads[i].location.x - PIN_WIDTH / 2) + 'px';
+        newPin.style.top = (ads[i].location.y - PIN_HEIGHT) + 'px';
+        newPin.innerHTML = '<img src="' + ads[i].author.avatar + '" width="40" height="40" draggable="false" offer-id="' + i + '">';
+        newPin.setAttribute('offer-id', i);
+        fragment.appendChild(newPin);
+      }
+      mapPins.appendChild(fragment);
+    },
 
-  window.removePins = function () {
-    var mapPinsElements = mapPins.children;
-    for (var i = mapPinsElements.length - 1; i >= 0; i--) {
-      if (mapPinsElements[i].hasAttribute('offer-id')) {
-        mapPins.removeChild(mapPinsElements[i]);
+    removePins: function () {
+      var mapPinsElements = mapPins.children;
+      for (var i = mapPinsElements.length - 1; i >= 0; i--) {
+        if (mapPinsElements[i].hasAttribute('offer-id')) {
+          mapPins.removeChild(mapPinsElements[i]);
+        }
       }
     }
   };
@@ -46,7 +48,7 @@
   var checkboxFeatures = housingFeatures.querySelectorAll('input[type="checkbox"]');
 
   // Массив на основании которого мы будем рендерить пины
-  window.filteredOffers = window.data;
+  //window.filteredOffers = window.data;
 
   // Функции фильтрации для каждого типа
   var byHouseType = function (ad) {
@@ -88,9 +90,15 @@
   };
 
   var filterPins = function () {
-    window.removePins();
-    window.filteredOffers = window.data.filter(byHouseType).filter(byPrice).filter(byRooms).filter(byGuests).filter(byFeatures);
-    debounce(window.generatePins(window.filteredOffers));
+    window.pin.removePins();
+    window.filteredOffers = window.data.filter(byHouseType)
+        .filter(byPrice)
+        .filter(byRooms)
+        .filter(byGuests)
+        .filter(byFeatures)
+        .slice(0, 5);
+
+    debounce(window.pin.generatePins(window.filteredOffers));
   };
 
   housingType.addEventListener('change', filterPins);
