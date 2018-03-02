@@ -8,7 +8,6 @@
 
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
-  var isDataLoad = false;
 
   var Limits = {
     RIGHT: map.offsetWidth,
@@ -16,6 +15,8 @@
     TOP: map.offsetTop + TOP_LIMIT,
     BOTTOM: map.offsetTop + BOTTOM_LIMIT
   };
+
+  var isDataLoad = false;
 
   window.map = {
     HOUSE_TYPES: {flat: 'Квартира', house: 'Дом', bungalo: 'Бунгало'},
@@ -37,13 +38,17 @@
 
   var mainPinMouseUpHandler = function () {
     document.querySelector('.map').classList.remove('map--faded');
+
     noticeForm.classList.remove('notice__form--disabled');
+
     for (i = 0; i < noticeForm.elements.length; i++) {
       noticeForm.elements[i].disabled = false;
     }
+
     var pinY = mapPinMain.offsetTop + window.map.MAIN_PIN_HEIGHT;
     var pinX = mapPinMain.offsetLeft + Math.floor(window.map.MAIN_PIN_WIDTH / 2);
     formAddress.value = pinX + ', ' + pinY;
+
     if (isDataLoad === false) {
       window.backend.load(function (adverts) {
         window.data = adverts;
@@ -52,7 +57,7 @@
       }, window.backend.errorHandler);
     } else {
       window.pin.removePins();
-      window.filteredOffers = window.data.slice(0, 5);
+      //window.filteredOffers = window.data.slice(0, 5);
       window.pin.generatePins(window.filteredOffers);
     }
     isDataLoad = true;
@@ -98,9 +103,11 @@
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
+
       var pinY = mapPinMain.offsetTop + window.map.MAIN_PIN_HEIGHT;
       var pinX = mapPinMain.offsetLeft + Math.floor(window.map.MAIN_PIN_WIDTH / 2);
       formAddress.value = pinX + ', ' + pinY;
+
       document.removeEventListener('mousemove', mainPinMouseMoveHandler);
       document.removeEventListener('mouseup', onMouseUp);
     };
