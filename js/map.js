@@ -57,7 +57,6 @@
       }, window.backend.errorHandler);
     } else {
       window.pin.removePins();
-      //window.filteredOffers = window.data.slice(0, 5);
       window.pin.generatePins(window.filteredOffers);
     }
     isDataLoad = true;

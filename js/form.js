@@ -140,5 +140,4 @@
   resetForm.addEventListener('click', function () {
     clearForm();
   });
-
 })();
