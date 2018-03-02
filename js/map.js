@@ -4,6 +4,7 @@
 
   var TOP_LIMIT = 150;
   var BOTTOM_LIMIT = 500;
+  var noticeForm = document.querySelector('.notice__form');
 
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -30,23 +31,31 @@
     }
   };
 
+  for (var i = 0; i < noticeForm.elements.length; i++) {
+    noticeForm.elements[i].disabled = true;
+  }
+
   var mainPinMouseUpHandler = function () {
     document.querySelector('.map').classList.remove('map--faded');
-    document.querySelector('.notice__form').classList.remove('notice__form--disabled');
-    document.querySelector('.notice__form').elements.disabled = false;
+    noticeForm.classList.remove('notice__form--disabled');
+    for (i = 0; i < noticeForm.elements.length; i++) {
+      noticeForm.elements[i].disabled = false;
+    }
     var pinY = mapPinMain.offsetTop + window.map.MAIN_PIN_HEIGHT;
     var pinX = mapPinMain.offsetLeft + Math.floor(window.map.MAIN_PIN_WIDTH / 2);
     formAddress.value = pinX + ', ' + pinY;
     if (isDataLoad === false) {
       window.backend.load(function (adverts) {
         window.data = adverts;
-        window.generatePins(window.data);
+        window.filteredOffers = window.data.slice(0, 5);
+        window.pin.generatePins(window.filteredOffers);
       }, window.backend.errorHandler);
     } else {
-      window.generatePins(window.data);
+      window.pin.removePins();
+      window.filteredOffers = window.data.slice(0, 5);
+      window.pin.generatePins(window.filteredOffers);
     }
     isDataLoad = true;
-
   };
 
   var pinCenterX = mapPinMain.offsetTop + window.map.MAIN_PIN_WIDTH / 2;
