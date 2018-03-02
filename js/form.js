@@ -14,6 +14,7 @@
 
   var form = document.querySelector('.notice__form');
   var formAddress = document.querySelector('#address');
+  var resetForm = document.querySelector('.form__reset');
 
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -55,6 +56,27 @@
 
   syncRoomsGuests(roomNumber.value);
 
+  var clearForm = function () {
+    form.reset();
+
+    syncRoomsGuests(roomNumber.value);
+
+    map.classList.add('map--faded');
+    form.classList.add('notice__form--disabled');
+
+    for (var i = 0; i < form.elements.length; i++) {
+      form.elements[i].disabled = true;
+    }
+    window.pin.removePins();
+
+    mapPinMain.style.display = 'block';
+    mapPinMain.style.left = '50%';
+    mapPinMain.style.top = '50%';
+
+    formAddress.value = pinCenterX + ', ' + pinCenterY;
+    window.card.removeMapCard();
+  };
+
   roomNumber.addEventListener('change', function (evt) {
     var target = evt.target;
     syncRoomsGuests(target.value);
@@ -63,22 +85,12 @@
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.backend.upload(new FormData(form), function () {
-      form.reset();
-
-      syncRoomsGuests(roomNumber.value);
-
-      map.classList.add('map--faded');
-      form.classList.add('notice__form--disabled');
-      form.elements.disabled = true;
-      window.removePins();
-
-      mapPinMain.style.display = 'block';
-      mapPinMain.style.left = '50%';
-      mapPinMain.style.top = '50%';
-
-      formAddress.value = pinCenterX + ', ' + pinCenterY;
-      window.card.removeMapCard();
-
+      clearForm();
     }, window.backend.errorHandler);
   });
+
+  resetForm.addEventListener('click', function () {
+    clearForm();
+  });
+
 })();

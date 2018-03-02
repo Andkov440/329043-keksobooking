@@ -50,6 +50,9 @@
 
       node.textContent = errorMessage;
       document.body.insertAdjacentElement('afterbegin', node);
+      setInterval(function () {
+        node.remove();
+      }, 10000);
     }
   };
 })();
