@@ -4,7 +4,7 @@
 
   var TOP_LIMIT = 150;
   var BOTTOM_LIMIT = 500;
-  var noticeForm = document.querySelector('.notice__form')
+  var noticeForm = document.querySelector('.notice__form');
 
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
