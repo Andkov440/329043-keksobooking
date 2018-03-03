@@ -17,7 +17,7 @@
       advertTemplate.querySelector('p:last-of-type').textContent = advert.offer.description;
       advertTemplate.querySelector('.popup__avatar').src = advert.author.avatar;
       map.insertBefore(advertTemplate, mapFiltersContainer);
-      //document.querySelector('.popup__pictures').setAttribute('style', 'height: 10');
+
       window.map.removeChildren(document.querySelector('.popup__features'));
       for (var i = 0; i < advert.offer.features.length; i++) {
         document.querySelector('.popup__features').innerHTML += '<li class="feature feature--' + advert.offer.features[i] + '"></li>';
