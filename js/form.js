@@ -50,7 +50,7 @@
     } else {
       roomCapacity.value = '0';
       for (i = 0; i < roomCapacity.options.length; i++) {
-        if (roomCapacity.options[i].value > 0) {
+        if (+roomCapacity.options[i].value > 0) {
           roomCapacity.options[i].disabled = true;
         } else {
           roomCapacity.options[i].disabled = false;

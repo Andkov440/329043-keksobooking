@@ -4,7 +4,6 @@
 
   var TOP_LIMIT = 150;
   var BOTTOM_LIMIT = 500;
-  var noticeForm = document.querySelector('.notice__form');
   var HOUSE_TYPES = {flat: 'Квартира', house: 'Дом', bungalo: 'Бунгало'};
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
@@ -13,6 +12,7 @@
 
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
+  var noticeForm = document.querySelector('.notice__form');
 
   var Limits = {
     RIGHT: map.offsetWidth,
