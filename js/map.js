@@ -5,6 +5,11 @@
   var TOP_LIMIT = 150;
   var BOTTOM_LIMIT = 500;
   var noticeForm = document.querySelector('.notice__form');
+  var HOUSE_TYPES = {flat: 'Квартира', house: 'Дом', bungalo: 'Бунгало'};
+  var ESC_KEYCODE = 27;
+  var ENTER_KEYCODE = 13;
+  var MAIN_PIN_HEIGHT = 70;
+  var MAIN_PIN_WIDTH = 65;
 
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -19,11 +24,11 @@
   var isDataLoad = false;
 
   window.map = {
-    HOUSE_TYPES: {flat: 'Квартира', house: 'Дом', bungalo: 'Бунгало'},
-    ESC_KEYCODE: 27,
-    ENTER_KEYCODE: 13,
-    MAIN_PIN_HEIGHT: 70,
-    MAIN_PIN_WIDTH: 65,
+    HOUSE_TYPES: HOUSE_TYPES,
+    ESC_KEYCODE: ESC_KEYCODE,
+    ENTER_KEYCODE: ENTER_KEYCODE,
+    MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT,
+    MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
 
     removeChildren: function (elem) {
       while (elem.lastChild) {

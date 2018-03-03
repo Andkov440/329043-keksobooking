@@ -17,7 +17,7 @@
       advertTemplate.querySelector('p:last-of-type').textContent = advert.offer.description;
       advertTemplate.querySelector('.popup__avatar').src = advert.author.avatar;
       map.insertBefore(advertTemplate, mapFiltersContainer);
-
+      //document.querySelector('.popup__pictures').setAttribute('style', 'height: 10');
       window.map.removeChildren(document.querySelector('.popup__features'));
       for (var i = 0; i < advert.offer.features.length; i++) {
         document.querySelector('.popup__features').innerHTML += '<li class="feature feature--' + advert.offer.features[i] + '"></li>';
@@ -27,6 +27,8 @@
       for (i = 0; i < advert.offer.photos.length; i++) {
         document.querySelector('.popup__pictures').innerHTML += '<li><img src="' + advert.offer.photos[i] + '" width="50" height="50"></li>';
       }
+
+      document.querySelector('.popup__pictures').setAttribute('style', 'overflow-y: auto; height: 100px');
 
       var closePopup = document.querySelector('.popup__close');
 
